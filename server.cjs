@@ -15,9 +15,12 @@ app.use(
   }),
 );
 
+const isProduction = process.env.NODE_ENV === 'production';
+const DOMAIN = isProduction ? 'https://benjama.onrender.com' : 'http://localhost:8080';
+
 const steam = new SteamAuth({
-  realm: process.env.STEAM_REALM || `http://localhost:${PORT}`,
-  returnUrl: process.env.STEAM_RETURN_URL || `http://localhost:${PORT}/auth/steam/callback`,
+  realm: DOMAIN,
+  returnUrl: `${DOMAIN}/auth/steam/callback`,
   apiKey: process.env.STEAM_API_KEY || "CF987D6943F18974F0A7756AD4231F29",
 });
 
