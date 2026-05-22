@@ -9,16 +9,21 @@ const PORT = process.env.PORT || 3000;
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "benjama-session-secret",
+    secret: process.env.SESSION_SECRET || 'benjama-super-gizli-key-2026',
     resave: false,
     saveUninitialized: false,
-    cookie: { 
-        secure: false,
-        httpOnly: true,
-        sameSite: 'lax'
-    }
+    proxy: true,
+    cookie: {
+      secure: false,
+      httpOnly: true,
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000,
+    },
   }),
 );
+
+// Render ve Cloudflare arkasında çalıştığımızı bildiriyoruz
+app.set('trust proxy', 1);
 
 const isProduction = process.env.NODE_ENV === 'production';
 const DOMAIN = isProduction ? 'https://benjama.onrender.com' : 'http://localhost:8080';
@@ -51,9 +56,9 @@ app.get("/", (req, res) => {
           }
           
           body {
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0d1b2a 100%);
+            background: linear-gradient(135deg, #242842 0%, #0c133b 50%, #0d529b 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #fff;
+            color: #ff0000;
             min-height: 100vh;
             display: flex;
             align-items: center;
